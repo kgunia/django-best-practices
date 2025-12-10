@@ -1,0 +1,117 @@
+# Pre-commit hooks configuration
+# See https://pre-commit.com for more information
+
+repos:
+  # Ruff - Fast Python linter and formatter
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.6
+    hooks:
+      # Linter
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        types_or: [python, pyi]
+      
+      # Formatter
+      - id: ruff-format
+        types_or: [python, pyi]
+
+  # Mypy - Static type checker
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.1
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - django-stubs==4.2.6
+          - types-requests
+          - types-python-dateutil
+        args: [--config-file=mypy.ini]
+        files: ^apps/
+        exclude: ^apps/.*/migrations/
+
+  # Django checks
+  - repo: local
+    hooks:
+      - id: django-check
+        name: Django System Check
+        entry: python manage.py check
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: django-migrations-check
+        name: Django Migrations Check
+        entry: python manage.py makemigrations --check --dry-run --no-input
+        language: system
+        pass_filenames: false
+        always_run: true
+        files: ^apps/.*/models\.py$
+
+  # Tests - optional, can be slow
+  # - repo: local
+  #   hooks:
+  #     - id: pytest-fast
+  #       name: Pytest (fast tests only)
+  #       entry: pytest -m "not slow" --maxfail=1 -x
+  #       language: system
+  #       pass_filenames: false
+  #       always_run: true
+
+  # General pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      # File formatting
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+      # File checks
+      - id: check-yaml
+        args: [--safe]
+      - id: check-json
+      - id: check-toml
+      - id: check-xml
+
+      # Code checks
+      - id: check-added-large-files
+        args: [--maxkb=500]
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: detect-private-key
+
+      # Python specific
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-docstring-first
+      - id: name-tests-test
+        args: [--pytest-test-first]
+
+  # Security checks
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        args: [-c, .bandit, -r, apps/]
+        exclude: ^apps/.*/tests/
+
+# Global configuration
+default_language_version:
+  python: python3.11
+
+# Fail fast - stop on first error
+fail_fast: false
+
+# Configuration for specific file types
+files: ''
+exclude: |
+  (?x)^(
+      .*migrations/.*\.py|
+      \.venv/.*|
+      venv/.*|
+      \.git/.*|
+      \.mypy_cache/.*|
+      \.pytest_cache/.*|
+      htmlcov/.*
+  )$

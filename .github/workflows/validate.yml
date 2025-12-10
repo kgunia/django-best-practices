@@ -1,0 +1,102 @@
+name: Validate Skill
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check SKILL.md exists
+      run: |
+        if [ ! -f "SKILL.md" ]; then
+          echo "❌ SKILL.md is required"
+          exit 1
+        fi
+        echo "✅ SKILL.md found"
+    
+    - name: Check YAML frontmatter
+      run: |
+        if ! grep -q "^---$" SKILL.md; then
+          echo "❌ SKILL.md missing YAML frontmatter"
+          exit 1
+        fi
+        if ! grep -q "^name:" SKILL.md; then
+          echo "❌ SKILL.md missing 'name' field"
+          exit 1
+        fi
+        if ! grep -q "^description:" SKILL.md; then
+          echo "❌ SKILL.md missing 'description' field"
+          exit 1
+        fi
+        echo "✅ YAML frontmatter valid"
+    
+    - name: Check file structure
+      run: |
+        echo "Checking directory structure..."
+        if [ ! -d "references" ]; then
+          echo "⚠️  No references/ directory"
+        else
+          echo "✅ references/ directory found"
+        fi
+        if [ ! -d "assets" ]; then
+          echo "⚠️  No assets/ directory"
+        else
+          echo "✅ assets/ directory found"
+        fi
+    
+    - name: Check for broken links
+      run: |
+        echo "Checking for broken internal links..."
+        
+        # Check SKILL.md for references to files that don't exist
+        for file in $(grep -oP '(?<=references/)[^)]+\.md' SKILL.md 2>/dev/null || true); do
+          if [ ! -f "references/$file" ]; then
+            echo "❌ Broken link: references/$file not found"
+            exit 1
+          fi
+        done
+        
+        for file in $(grep -oP '(?<=assets/)[^)]+' SKILL.md 2>/dev/null || true); do
+          if [ ! -f "assets/$file" ]; then
+            echo "❌ Broken link: assets/$file not found"
+            exit 1
+          fi
+        done
+        
+        echo "✅ No broken links found"
+    
+    - name: Check Markdown formatting
+      run: |
+        echo "Checking basic Markdown formatting..."
+        
+        # Check for proper heading hierarchy (simplified check)
+        if grep -q "^#####" SKILL.md; then
+          echo "⚠️  Consider using maximum 4 heading levels"
+        fi
+        
+        echo "✅ Markdown formatting looks good"
+    
+    - name: Validate code blocks
+      run: |
+        echo "Checking code blocks have language specified..."
+        
+        # Check if code blocks have language tags
+        if grep -P '^```$' SKILL.md >/dev/null; then
+          echo "⚠️  Some code blocks missing language tag"
+        fi
+        
+        echo "✅ Code blocks validated"
+    
+    - name: Summary
+      if: success()
+      run: |
+        echo "================================"
+        echo "✅ All validation checks passed!"
+        echo "================================"
