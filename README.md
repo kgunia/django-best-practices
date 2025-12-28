@@ -2,7 +2,7 @@
 
 Production-ready Django patterns, code quality tools, and performance optimizations. A comprehensive guide for building maintainable Django applications.
 
-[![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/yourusername/django-best-practices/releases)
+[![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/kgunia/django-best-practices/releases)
 [![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Django](https://img.shields.io/badge/django-4.x%20%7C%205.x-green.svg)](https://www.djangoproject.com/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -74,7 +74,7 @@ Read directly on GitHub:
 Keep it local as a reference:
 
 ```bash
-git clone https://github.com/yourusername/django-best-practices.git
+git clone https://github.com/kgunia/django-best-practices.git
 cd django-best-practices
 
 # Browse with your favorite editor
@@ -110,7 +110,7 @@ cp assets/choices_mixin.py your-project/apps/core/
 
 1. **Download the skill:**
    ```bash
-   wget https://github.com/yourusername/django-best-practices/releases/latest/download/django-best-practices.skill
+   wget https://github.com/kgunia/django-best-practices/releases/latest/download/django-best-practices.skill
    ```
 
 2. **Upload to Claude:**
@@ -288,10 +288,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 💬 Support & Community
 
-- 🐛 [Report bugs](https://github.com/yourusername/django-best-practices/issues)
-- 💡 [Request features](https://github.com/yourusername/django-best-practices/issues)
-- 📖 [Read documentation](https://github.com/yourusername/django-best-practices/wiki)
-- 💬 [Discussions](https://github.com/yourusername/django-best-practices/discussions)
+- 🐛 [Report bugs](https://github.com/kgunia/django-best-practices/issues)
+- 💡 [Request features](https://github.com/kgunia/django-best-practices/issues)
+- 📖 [Read documentation](https://github.com/kgunia/django-best-practices/wiki)
+- 💬 [Discussions](https://github.com/kgunia/django-best-practices/discussions)
 
 ## 🤖 Bonus: Claude AI Skill
 
@@ -304,7 +304,7 @@ This repository can be packaged as a Claude AI Skill for automated assistance.
 - Available in all Claude conversations within a project
 
 **How to use:**
-1. Download `.skill` file from [Releases](https://github.com/yourusername/django-best-practices/releases)
+1. Download `.skill` file from [Releases](https://github.com/kgunia/django-best-practices/releases)
 2. Upload to your Claude Project
 3. Get AI assistance following these exact patterns!
 

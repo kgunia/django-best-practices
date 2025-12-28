@@ -29,8 +29,8 @@ git add .
 # Make first commit
 git commit -m "Initial commit - Django Best Practices v2.0"
 
-# Add remote (replace YOUR_USERNAME with your GitHub username)
-git remote add origin https://github.com/YOUR_USERNAME/django-best-practices.git
+# Add remote (replace kgunia with your GitHub username)
+git remote add origin https://github.com/kgunia/django-best-practices.git
 
 # Push to GitHub
 git branch -M main
@@ -76,7 +76,7 @@ git push -u origin main
    
    ### 🚀 How to Use
    1. **Browse online** - Read documentation directly on GitHub
-   2. **Clone repository** - `git clone https://github.com/YOUR_USERNAME/django-best-practices.git`
+   2. **Clone repository** - `git clone https://github.com/kgunia/django-best-practices.git`
    3. **Copy configs** - Use ready-to-use configuration files
    4. **🤖 Bonus:** Download `.skill` file for Claude AI assistance
    
